@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ course.CourseName }} - AI Learning Platform</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { 
+        background: linear-gradient(135deg, #0a0f24, #001a2c); 
+        font-family: 'Poppins', sans-serif; 
+        color: #fff;
+        min-height: 100vh;
+    }
+    .container { margin-top: 80px; margin-bottom: 50px; }
+    .video-player { 
+        max-width: 900px; 
+        margin: auto; 
+        padding: 30px; 
+        background: rgba(255,255,255,0.05); 
+        border-radius: 15px; 
+        box-shadow: 0 8px 25px rgba(0,255,255,0.1); 
+        text-align: center;
+    }
+    .back-btn { 
+        margin-bottom: 20px; 
+        background: cyan; 
+        color: #00131c; 
+        border: none; 
+        font-weight: 600;
+        padding: 8px 20px;
+        border-radius: 50px;
+    }
+    .back-btn:hover { 
+        background: #00eaff; 
+        color: #00131c; 
+    }
+    h2 { 
+        color: cyan; 
+        font-weight: 700; 
+        margin-bottom: 10px; 
+        margin-top: 15px;
+    }
+    p { 
+        color: #e0e6f0; 
+        opacity: 0.85; 
+    }
+    .btn-play { 
+        background: cyan; 
+        color: #00131c; 
+        border-radius: 50px; 
+        font-weight: 600; 
+        padding: 12px 25px; 
+        text-decoration: none; 
+        display: inline-block;
+        margin-top: 15px;
+        transition: transform 0.2s, background 0.2s;
+    }
+    .btn-play:hover { 
+        background: #00eaff; 
+        color: #00131c; 
+        transform: scale(1.05); 
+    }
+    iframe { 
+        width: 100%; 
+        height: 480px; 
+        border-radius: 10px; 
+        border: none; 
+        margin-bottom: 20px; 
+    }
+    @media (max-width: 576px) {
+        iframe { height: 260px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Back Button -->
+    <a href="{{ url_for('videos') }}" class="btn back-btn">⬅️ Back to Videos</a>
+
+    <!-- Video Player Card -->
+    <div class="video-player">
+      <!-- Embedded YouTube Video -->
+     <iframe width="100%" height="500" 
+    src="https://www.youtube.com/embed/VIDEO_ID" 
+    title="Data Science with Python 88" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowfullscreen>
+</iframe>
+
+
+
+      <!-- Course Info -->
+      <h2>{{ course.CourseName }}</h2>
+      <p>
+        <strong>Category:</strong> {{ course.Category }} |
+        <strong>Instructor:</strong> {{ course.Instructor }} |
+        <strong>Duration:</strong> {{ course.DurationHours }} hours
+      </p>
+      <p>{{ course.Description }}</p>
+
+      <!-- Open in YouTube Button -->
+      <a href="{{ course.CourseLink }}" target="_blank" class="btn btn-play">▶️ Open on YouTube</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Tutor – Talking Avatar (With Working Lip‑Sync)</title>
+
+<!-- Model Viewer -->
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body { background:#eef2f5; margin:0; font-family:Arial; }
+.container-box { display:flex; gap:20px; padding:20px; flex-wrap:wrap; }
+.box { flex:1; min-width:300px; background:white; padding:15px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); }
+#avatarContainer { width:100%; height:500px; background:#222; border-radius:10px; }
+model-viewer { width:100%; height:100%; }
+.chat-box { height:500px; overflow-y:auto; border:1px solid #ccc; padding:10px; }
+button { margin-right:5px; }
+</style>
+</head>
+<body>
+
+<div class="container-box">
+
+    <!-- Avatar Section -->
+    <div class="box">
+        <h3>Avatar</h3>
+
+        <div id="avatarContainer">
+            <model-viewer id="avatarViewer"
+                src="/static/avatar/female.glb"
+                alt="AI Avatar"
+                camera-controls
+                shadow-intensity="1"
+                exposure="1"
+                disable-tap>
+            </model-viewer>
+        </div>
+
+        <div class="mt-3">
+            <button class="btn btn-primary" onclick="loadMale()">Load Male</button>
+            <button class="btn btn-danger" onclick="loadFemale()">Load Female</button>
+            <button class="btn btn-success" onclick="speakAvatar()">Speak</button>
+            <button id="muteBtn" class="btn btn-secondary" onclick="toggleMute()">Mute</button>
+        </div>
+    </div>
+
+    <!-- Chat Section -->
+    <div class="box">
+        <h3>AI Tutor</h3>
+        <div id="chat" class="chat-box"></div>
+
+        <input id="userInput" class="form-control mt-2" placeholder="Ask something..." />
+        <button class="btn btn-primary mt-2" onclick="sendMessage()">Send</button>
+    </div>
+
+</div>
+
+<!-- Back -->
+<div class="mt-5 text-center">
+    <a href="{{ url_for('student.dashboard') }}" class="btn btn-secondary">⬅ Back to Dashboard</a>
+</div>
+
+<script>
+let currentVoice = "female";
+let isMuted = false;
+let lastSpokenText = "";
+const avatarViewer = document.getElementById("avatarViewer");
+
+avatarViewer.removeAttribute("auto-rotate");
+
+let voicesLoaded = false;
+let voiceMale = null;
+let voiceFemale = null;
+
+function loadVoices() {
+    const voices = speechSynthesis.getVoices();
+
+    if (!voices || voices.length === 0) {
+        setTimeout(loadVoices, 200);
+        return;
+    }
+
+    voiceMale = voices.find(v => v.name.includes("David") || v.name.includes("Male")) || voices[0];
+    voiceFemale = voices.find(v => v.name.includes("Zira") || v.name.includes("Female")) || voices[0];
+
+    voicesLoaded = true;
+}
+
+speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
+
+/* ------------------------------
+   Load Male/Female Avatar
+------------------------------*/
+function loadMale() {
+    currentVoice = "male";
+    avatarViewer.src = "/static/avatar/male.glb";
+}
+
+function loadFemale() {
+    currentVoice = "female";
+    avatarViewer.src = "/static/avatar/female.glb";
+}
+
+/* ------------------------------
+   Speak Preset
+------------------------------*/
+function speakAvatar() {
+    speakText("Hello! I am your AI tutor. Ask me anything.");
+}
+
+/* ------------------------------
+   True Lip‑Sync (animate jaw bone)
+------------------------------*/
+function applyLipsync(isTalking) {
+    if (!avatarViewer.model) return;
+
+    // Try to access the jaw bone (supports both male/female)
+    const jaw = avatarViewer.model.getObjectByName("mixamorig:Jaw") 
+                || avatarViewer.model.getObjectByName("Jaw");
+
+    if (jaw) {
+        jaw.rotation.x = isTalking ? 0.1 + Math.random() * 0.05 : 0; // simple random open/close
+    } else {
+        // fallback: scale avatar if jaw bone not found
+        const scale = isTalking ? 1.03 : 1;
+        avatarViewer.style.transform = `scale(${scale})`;
+    }
+}
+
+// Wait until model is loaded
+avatarViewer.addEventListener('load', () => {
+    avatarViewer.model = avatarViewer.model || avatarViewer.model; // expose model
+});
+
+/* ------------------------------
+   Speak Function
+------------------------------*/
+function speakText(text) {
+    if (isMuted) return;
+
+    lastSpokenText = text;
+
+    if (!voicesLoaded) {
+        setTimeout(() => speakText(text), 200);
+        return;
+    }
+
+    speechSynthesis.cancel();
+
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.voice = currentVoice === "male" ? voiceMale : voiceFemale;
+    utter.rate = 1;
+    utter.pitch = 1;
+
+    let lipsyncInterval;
+
+    utter.onstart = () => {
+        lipsyncInterval = setInterval(() => {
+            applyLipsync(true);
+            setTimeout(() => applyLipsync(false), 120);
+        }, 160);
+    };
+
+    utter.onend = () => {
+        clearInterval(lipsyncInterval);
+        applyLipsync(false);
+    };
+
+    speechSynthesis.speak(utter);
+}
+
+/* ------------------------------
+   Mute / Unmute
+------------------------------*/
+function toggleMute() {
+    isMuted = !isMuted;
+    const btn = document.getElementById("muteBtn");
+
+    if (isMuted) {
+        btn.innerText = "Unmute";
+        speechSynthesis.cancel();
+    } else {
+        btn.innerText = "Mute";
+        speakText(lastSpokenText || "Voice enabled.");
+    }
+}
+
+/* ------------------------------
+   Send Message
+------------------------------*/
+async function sendMessage() {
+    const input = document.getElementById("userInput").value;
+    if (!input) return;
+
+    addChat("You", input, true);
+
+    try {
+        const response = await fetch("/student/ai_tutor_api", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ question: input })
+        });
+
+        const data = await response.json();
+        const reply = data.answer || "Sorry, I couldn't generate a response.";
+
+        addChat("AI", reply, false);
+        speakText(reply);
+
+    } catch {
+        addChat("AI", "Error connecting to AI tutor.", false);
+        speakText("Error connecting to the server.");
+    }
+
+    document.getElementById("userInput").value = "";
+}
+
+/* ------------------------------
+   Chat Message Builder
+------------------------------*/
+function addChat(sender, msg, editable) {
+    const chatDiv = document.getElementById("chat");
+    const id = "msg_" + Date.now();
+
+    if (editable) {
+        chatDiv.innerHTML += `
+            <div id="${id}">
+                <p><b>${sender}:</b>
+                <span class="msg-text">${msg}</span>
+                <button class="btn btn-sm btn-warning" onclick="editMsg('${id}')">Edit</button>
+                </p>
+            </div>
+        `;
+    } else {
+        chatDiv.innerHTML += `<p><b>${sender}:</b> ${msg}</p>`;
+    }
+
+    chatDiv.scrollTop = chatDiv.scrollHeight;
+}
+
+/* ------------------------------
+   Edit Only User Messages
+------------------------------*/
+function editMsg(id) {
+    const div = document.getElementById(id);
+    const span = div.querySelector(".msg-text");
+
+    const updated = prompt("Edit your message:", span.innerText);
+
+    if (updated && updated.trim() !== "") {
+        span.innerText = updated;
+    }
+}
+</script>
+
+</body>
+</html>

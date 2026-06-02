@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+
+<style>
+    /* Basic Reset */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(135deg, #0b1c28, #152836);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        width: 350px;
+        max-width: 90%;
+        background: rgba(21, 40, 54, 0.95);
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 255, 255, 0.5);
+    }
+
+    h2 {
+        text-align: center;
+        color: #00ffff;
+        margin-bottom: 20px;
+        font-size: 28px;
+        letter-spacing: 1px;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 8px;
+        border: none;
+        background: #233542;
+        color: white;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    input:focus {
+        background: #1a2a38;
+        outline: none;
+        transform: scale(1.02);
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background: #00ffff;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background 0.3s ease, transform 0.2s ease;
+        color: #0b1c28;
+    }
+
+    button:hover {
+        background: #00d4d4;
+        transform: scale(1.03);
+    }
+
+    a {
+        color: #00ffff;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+        transition: color 0.3s ease;
+    }
+
+    a:hover {
+        color: #00d4d4;
+        text-decoration: underline;
+    }
+
+    /* Flash messages */
+    .flash-message {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        text-align: center;
+        border-radius: 8px;
+        font-weight: bold;
+        animation: fadeIn 0.5s ease;
+    }
+
+    .flash-message.success {
+        background-color: rgba(0, 255, 255, 0.2);
+        color: #00ffff;
+        border: 1px solid #00ffff;
+    }
+
+    .flash-message.danger {
+        background-color: rgba(255, 0, 0, 0.2);
+        color: #ff4d4d;
+        border: 1px solid #ff4d4d;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 400px) {
+        .container {
+            padding: 20px;
+        }
+        h2 {
+            font-size: 24px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Login</h2>
+
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('login') }}" method="POST">
+        <input type="text" name="username" placeholder="Enter Username" required>
+        <input type="password" name="password" placeholder="Enter Password" required>
+        <button type="submit">Login</button>
+    </form>
+
+    <a href="{{ url_for('signup') }}">Don't have an account? Sign Up</a>
+</div>
+
+</body>
+</html>

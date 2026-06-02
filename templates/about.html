@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About | AI Learning Platform</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    body {
+        font-family: "Poppins", sans-serif;
+        background: #f4f6f9; /* light background for contrast */
+        margin: 0;
+        padding: 0;
+    }
+
+    /* HERO SECTION */
+    .hero {
+        padding: 100px 20px;
+        text-align: center;
+        background: linear-gradient(135deg, #0b3d91, #1a4f9c); /* navy gradient */
+        color: #ffffff;
+        border-bottom-left-radius: 25px;
+        border-bottom-right-radius: 25px;
+        animation: fadeIn 1.2s ease-in-out;
+    }
+
+    .hero h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        animation: slideDown 1s ease;
+    }
+
+    .hero p {
+        font-size: 1.3rem;
+        margin-top: 10px;
+        color: #e0e6f0; /* softer white */
+    }
+
+    /* FEATURE CARDS */
+    .feature-card {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        animation: floatUp 1.2s ease;
+        text-align: center;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ICONS */
+    .feature-icon {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        color: #0b3d91; /* navy blue */
+    }
+
+    h4 {
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: #0b3d91; /* navy for headings */
+    }
+
+    p {
+        color: #555;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeIn {
+        from {opacity:0;} 
+        to {opacity:1;}
+    }
+
+    @keyframes slideDown {
+        from {opacity:0; transform: translateY(-20px);}
+        to {opacity:1; transform: translateY(0);}
+    }
+
+    @keyframes floatUp {
+        from {opacity:0; transform: translateY(40px);}
+        to {opacity:1; transform: translateY(0);}
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+        .feature-icon {
+            font-size: 3rem;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+        .hero p {
+            font-size: 1.1rem;
+        }
+    }
+</style>
+</head>
+<body>
+
+<!-- HERO SECTION -->
+<section class="hero">
+    <h1>About Us</h1>
+    <p class="mt-3">Empowering students with AI-powered learning tools for faster, smarter education.</p>
+</section>
+
+<!-- FEATURES SECTION -->
+<section class="container py-5">
+    <h2 class="text-center mb-4 fw-bold">What We Offer</h2>
+
+    <div class="row g-4">
+
+        <!-- AI Lessons -->
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">📘</div>
+                <h4>AI Lessons</h4>
+                <p>Instantly generated lessons tailored to any subject or topic for faster learning.</p>
+            </div>
+        </div>
+
+        <!-- AI Notes Generator -->
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">📝</div>
+                <h4>AI Notes Generator</h4>
+                <p>Automatically generate clean, structured notes to help students revise quickly.</p>
+            </div>
+        </div>
+
+        <!-- AI Quiz Generator -->
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">❓</div>
+                <h4>AI Quiz Generator</h4>
+                <p>Create quizzes instantly based on the selected topic or lesson material.</p>
+            </div>
+        </div>
+
+        <!-- AI Tutor -->
+        <div class="col-md-6">
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h4>AI Tutor</h4>
+                <p>An intelligent assistant that answers your doubts and explains concepts step-by-step.</p>
+            </div>
+        </div>
+
+        <!-- Course Registration -->
+        <div class="col-md-6">
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h4>Course Registration System</h4>
+                <p>Register for additional courses quickly and easily.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>External Courses</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+        }
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #343a40, #212529);
+        }
+        .sidebar a {
+            color: #adb5bd;
+            text-decoration: none;
+            display: block;
+            padding: 12px 20px;
+        }
+        .sidebar a:hover, .sidebar a.active {
+            background-color: #495057;
+            color: #fff;
+        }
+        .table-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+        }
+        .course-img {
+            width: 70px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <div class="col-md-2 sidebar p-0">
+            <h4 class="text-white text-center py-4">Admin Panel</h4>
+            <a href="{{ url_for('admin.dashboard') }}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+            <a href="{{ url_for('admin.manage_courses') }}"><i class="bi bi-journal-bookmark me-2"></i>Courses</a>
+
+            <a href="{{ url_for('admin.manage_notes') }}">
+                <i class="bi bi-stickies me-2"></i>Notes
+            </a>
+
+            <a href="{{ url_for('admin.manage_quizzes') }}">
+                <i class="bi bi-card-checklist me-2"></i>Quizzes
+            </a>
+            <a href="{{ url_for('admin.manage_lessons') }}"><i class="bi bi-file-earmark-text me-2"></i>Lessons</a>
+            <a href="{{ url_for('admin.external_courses') }}" class="active"><i class="bi bi-link-45deg me-2"></i>External Courses</a>
+           
+            <a href="{{ url_for('admin.admin_logout') }}" class="text-danger"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-10 p-4">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3>External Course Management</h3>
+            </div>
+
+            <div class="table-card p-4">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Thumbnail</th>
+                            <th>Course Title</th>
+                            <th>Instructor</th>
+                            <th>Skills</th>
+                            <th>Rating</th>
+                            <th>Link</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in courses %}
+                        <tr>
+                            <td>
+                                <img src="{{ course['Course Thumbnail Image'] or url_for('static', filename='images/default_thumbnail.png') }}" class="course-img">
+                            </td>
+                            <td class="fw-semibold">{{ course['Course Title'] }}</td>
+                            <td>{{ course['Course Instructor Name'] or 'Not specified' }}</td>
+                            <td style="max-width:250px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                                {{ course['Skills You Gain'] }}
+                            </td>
+                            <td>{{ course['Ratings'] }}</td>
+                            <td>
+                                <a href="{{ course['Course Links'] }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                    Visit
+                                </a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">No external courses found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

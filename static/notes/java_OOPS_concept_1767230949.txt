@@ -1,0 +1,714 @@
+Object-Oriented Programming (OOP) is a programming paradigm based on the concept of "objects", which can contain data and code: data in the form of fields (attributes or properties) and code in the form of procedures (methods). Java is a fundamentally object-oriented language.
+
+Here are detailed notes on Java OOPS concepts:
+
+---
+
+## I. Introduction to OOPS in Java
+
+### What is OOPS?
+*   **Paradigm:** OOPS is a programming paradigm that organizes software design around data, or objects, rather than functions and logic.
+*   **Real-world Modeling:** It aims to model real-world entities and their interactions.
+*   **Benefits:** Promotes modularity, reusability, extensibility, maintainability, and security.
+
+### Core OOPS Terminology
+1.  **Class:** A blueprint or a template for creating objects. It defines the structure (attributes) and behavior (methods) that all objects of that class will have. A class doesn't occupy memory until an object is created.
+    *   **Example:** `Car` class.
+2.  **Object:** A real-world entity, an instance of a class. It occupies memory. Each object has:
+    *   **State (Attributes/Properties/Fields):** The data associated with an object (e.g., `Car` object's color, make, model).
+    *   **Behavior (Methods):** The actions an object can perform (e.g., `Car` object's `start()`, `stop()`, `accelerate()`).
+    *   **Identity:** A unique name that distinguishes one object from another.
+    *   **Example:** `myCar` object of type `Car`, with color="Red", make="Toyota", model="Camry".
+
+### Example: Class and Object
+
+```java
+// Class Definition
+class Dog {
+    // Attributes (State)
+    String name;
+    String breed;
+    int age;
+
+    // Constructor (to initialize the object)
+    public Dog(String name, String breed, int age) {
+        this.name = name;
+        this.breed = breed;
+        this.age = age;
+    }
+
+    // Methods (Behavior)
+    public void bark() {
+        System.out.println(name + " says Woof!");
+    }
+
+    public void displayInfo() {
+        System.out.println("Name: " + name + ", Breed: " + breed + ", Age: " + age);
+    }
+
+    public static void main(String[] args) {
+        // Object Creation (Instantiation)
+        Dog myDog = new Dog("Buddy", "Golden Retriever", 3);
+        Dog yourDog = new Dog("Lucy", "Beagle", 5);
+
+        // Accessing object's state and behavior
+        myDog.displayInfo(); // Output: Name: Buddy, Breed: Golden Retriever, Age: 3
+        myDog.bark();        // Output: Buddy says Woof!
+
+        yourDog.displayInfo(); // Output: Name: Lucy, Breed: Beagle, Age: 5
+        yourDog.bark();        // Output: Lucy says Woof!
+    }
+}
+```
+
+---
+
+## II. The Four Pillars of OOPS
+
+The core principles that define Object-Oriented Programming are:
+
+### 1. Encapsulation
+*   **Definition:** The bundling of data (attributes) and methods (behavior) that operate on the data into a single unit (a class), and restricting direct access to some of an object's components.
+*   **Concept:** It's like a capsule where data and methods are wrapped together. It's often referred to as "data hiding" or "information hiding."
+*   **How it works in Java:**
+    *   Declare attributes as `private`.
+    *   Provide `public` "getter" methods to read the data.
+    *   Provide `public` "setter" methods to modify the data.
+*   **Benefits:**
+    *   **Data Security:** Prevents external code from directly manipulating an object's internal state.
+    *   **Flexibility:** Allows you to change the internal implementation of a class without affecting its external behavior.
+    *   **Maintainability:** Easier to debug and maintain the code.
+    *   **Controlled Access:** Data can be validated before being set.
+
+#### Example: Encapsulation
+
+```java
+class Student {
+    private String name; // private attribute
+    private int age;     // private attribute
+
+    public Student(String name, int age) {
+        this.name = name;
+        setAge(age); // Use setter for validation
+    }
+
+    // Getter for name
+    public String getName() {
+        return name;
+    }
+
+    // Setter for name
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // Getter for age
+    public int getAge() {
+        return age;
+    }
+
+    // Setter for age (with validation)
+    public void setAge(int age) {
+        if (age > 0) { // Validation logic
+            this.age = age;
+        } else {
+            System.out.println("Age cannot be negative.");
+        }
+    }
+
+    public static void main(String[] args) {
+        Student s1 = new Student("Alice", 20);
+        System.out.println(s1.getName()); // Access via getter: Alice
+        System.out.println(s1.getAge());  // Access via getter: 20
+
+        s1.setAge(22); // Update via setter
+        System.out.println(s1.getAge());  // 22
+
+        s1.setAge(-5); // Invalid update via setter
+        // Output: Age cannot be negative.
+        System.out.println(s1.getAge());  // Still 22
+    }
+}
+```
+
+### 2. Inheritance
+*   **Definition:** A mechanism where one class acquires the properties (fields) and behaviors (methods) of another class.
+*   **Concept:** Represents an "is-a" relationship (e.g., A `Dog` is an `Animal`).
+*   **Terminology:**
+    *   **Superclass/Parent Class/Base Class:** The class whose features are inherited.
+    *   **Subclass/Child Class/Derived Class:** The class that inherits features from another class.
+*   **How it works in Java:**
+    *   Uses the `extends` keyword. `class Subclass extends Superclass { ... }`
+*   **Types of Inheritance in Java (primarily):**
+    *   **Single Inheritance:** A subclass inherits from only one superclass. (Java directly supports this).
+    *   **Multi-level Inheritance:** A class inherits from a class which in turn inherits from another class. (A -> B -> C)
+    *   **Hierarchical Inheritance:** Multiple subclasses inherit from a single superclass.
+    *   **Multiple Inheritance:** A class inherits from multiple superclasses. (Java *does not* support multiple inheritance of classes directly to avoid the Diamond Problem, but it achieves a form of multiple inheritance through **interfaces**).
+*   **Benefits:**
+    *   **Code Reusability:** Subclasses don't need to rewrite inherited code.
+    *   **Method Overriding:** Allows a subclass to provide a specific implementation for a method already provided by its superclass.
+    *   **Extensibility:** New features can be added without modifying existing code.
+
+#### Example: Inheritance
+
+```java
+// Superclass
+class Animal {
+    String species;
+
+    public Animal(String species) {
+        this.species = species;
+    }
+
+    public void eat() {
+        System.out.println(species + " is eating.");
+    }
+
+    public void sleep() {
+        System.out.println(species + " is sleeping.");
+    }
+}
+
+// Subclass
+class Dog extends Animal {
+    String breed;
+
+    public Dog(String name, String breed) {
+        super("Canine"); // Call to superclass constructor
+        this.breed = breed;
+        this.name = name; // Inherited attribute
+    }
+
+    // New method specific to Dog
+    public void bark() {
+        System.out.println(name + " barks!");
+    }
+
+    // Method Overriding (optional: @Override annotation is good practice)
+    @Override
+    public void eat() {
+        System.out.println(name + " is happily eating dog food.");
+    }
+
+    String name; // Dog specific name, shadowing if Animal also had name, but here it doesn't.
+
+    public static void main(String[] args) {
+        Dog myDog = new Dog("Buddy", "Golden Retriever");
+        myDog.eat();    // Output: Buddy is happily eating dog food. (Overridden method)
+        myDog.sleep();  // Output: Canine is sleeping. (Inherited method)
+        myDog.bark();   // Output: Buddy barks! (Dog-specific method)
+
+        Animal genericAnimal = new Animal("Generic Animal");
+        genericAnimal.eat(); // Output: Generic Animal is eating.
+
+        Animal anotherDog = new Dog("Lucy", "Beagle"); // Polymorphism in action
+        anotherDog.eat(); // Output: Lucy is happily eating dog food.
+    }
+}
+```
+
+### 3. Polymorphism
+*   **Definition:** The ability of an object to take on many forms. It allows objects of different classes to be treated as objects of a common superclass.
+*   **Concept:** "One interface, multiple implementations." A single action can be performed in different ways.
+*   **How it works in Java:** Achieved through method overloading and method overriding.
+*   **Types of Polymorphism:**
+
+    *   **Compile-time Polymorphism (Static Polymorphism/Method Overloading):**
+        *   **Definition:** When a class has multiple methods with the same name but different parameter lists (different number of arguments, different types of arguments, or different order of arguments). The compiler decides which method to call based on the arguments provided.
+        *   **Example:** `System.out.println()` method is overloaded for various data types.
+
+    *   **Run-time Polymorphism (Dynamic Polymorphism/Method Overriding):**
+        *   **Definition:** When a subclass provides a specific implementation for a method that is already defined in its superclass. The method to be called is decided at runtime by the JVM based on the actual object type, not the reference type.
+        *   **Requirements for Overriding:**
+            *   Method signature (name, parameter list, return type) must be the same as in the superclass.
+            *   Access modifier cannot be more restrictive than in the superclass.
+            *   Can throw fewer or broader exceptions, but not new checked exceptions.
+            *   `private`, `static`, and `final` methods cannot be overridden.
+
+*   **Benefits:**
+    *   **Flexibility & Extensibility:** New classes can be added without modifying existing code.
+    *   **Code Simplification:** Allows writing generic code that works with different objects.
+    *   **Decoupling:** Reduces dependencies between components.
+
+#### Example: Polymorphism
+
+```java
+// --- Compile-time Polymorphism (Method Overloading) ---
+class Calculator {
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    public int add(int a, int b, int c) { // Different number of arguments
+        return a + b + c;
+    }
+
+    public double add(double a, double b) { // Different type of arguments
+        return a + b;
+    }
+}
+
+// --- Run-time Polymorphism (Method Overriding) ---
+class Shape {
+    public void draw() {
+        System.out.println("Drawing a generic shape.");
+    }
+}
+
+class Circle extends Shape {
+    @Override
+    public void draw() {
+        System.out.println("Drawing a Circle.");
+    }
+}
+
+class Rectangle extends Shape {
+    @Override
+    public void draw() {
+        System.out.println("Drawing a Rectangle.");
+    }
+}
+
+public class PolymorphismDemo {
+    public static void main(String[] args) {
+        // Method Overloading Demo
+        Calculator calc = new Calculator();
+        System.out.println("Sum of 2 ints: " + calc.add(5, 10));         // Calls add(int, int)
+        System.out.println("Sum of 3 ints: " + calc.add(1, 2, 3));       // Calls add(int, int, int)
+        System.out.println("Sum of 2 doubles: " + calc.add(5.5, 10.5));  // Calls add(double, double)
+
+        System.out.println("\n--- Run-time Polymorphism Demo ---");
+        // Shape reference, but object can be Circle or Rectangle
+        Shape s1 = new Circle();    // s1 is a Shape reference, but points to a Circle object
+        Shape s2 = new Rectangle(); // s2 is a Shape reference, but points to a Rectangle object
+        Shape s3 = new Shape();     // s3 is a Shape reference, points to a Shape object
+
+        s1.draw(); // Output: Drawing a Circle. (Runtime decision)
+        s2.draw(); // Output: Drawing a Rectangle. (Runtime decision)
+        s3.draw(); // Output: Drawing a generic shape.
+
+        // Example with a method that accepts a Superclass type
+        drawAnyShape(new Circle());
+        drawAnyShape(new Rectangle());
+        drawAnyShape(new Shape());
+    }
+
+    public static void drawAnyShape(Shape shape) {
+        shape.draw(); // This method doesn't know the exact type at compile time
+    }
+}
+```
+
+### 4. Abstraction
+*   **Definition:** The process of hiding the implementation details and showing only the essential features of an object to the outside world.
+*   **Concept:** Focuses on "what" an object does rather than "how" it does it. It provides a simplified view of complex systems.
+*   **How it works in Java:** Achieved using `abstract` classes and `interfaces`.
+
+#### 4.1. Abstract Classes
+*   **Definition:** A class that cannot be instantiated (you cannot create objects of an abstract class directly). It can have both abstract and non-abstract methods.
+*   **Characteristics:**
+    *   Declared with the `abstract` keyword: `public abstract class ClassName { ... }`
+    *   Can have `abstract` methods (methods without an implementation, only a signature, ending with a semicolon). Subclasses *must* implement these abstract methods.
+    *   Can have concrete (non-abstract) methods, constructors, and instance variables.
+    *   A class becomes abstract if it contains at least one abstract method, or if you declare it as abstract explicitly.
+    *   Subclasses inherit from abstract classes using `extends`.
+
+#### 4.2. Interfaces
+*   **Definition:** A blueprint of a class. It can contain only abstract methods (before Java 8) and `public static final` fields. From Java 8, interfaces can also have `default` and `static` methods. From Java 9, `private` methods are also allowed.
+*   **Characteristics:**
+    *   Declared with the `interface` keyword: `public interface InterfaceName { ... }`
+    *   All methods are `public abstract` by default (implicit, no need to write it before Java 8).
+    *   All fields are `public static final` by default (implicit).
+    *   A class implements an interface using the `implements` keyword. `class ClassName implements InterfaceName { ... }`
+    *   A class can implement multiple interfaces (achieving multiple inheritance of type).
+    *   Interfaces provide a contract for classes to follow.
+
+*   **Difference between Abstract Class and Interface:**
+
+| Feature            | Abstract Class                                        | Interface                                                                  |
+| :----------------- | :---------------------------------------------------- | :------------------------------------------------------------------------- |
+| **Declaration**    | `abstract class`                                      | `interface`                                                                |
+| **Methods**        | Can have abstract and concrete methods.               | Before Java 8: All abstract. From Java 8: `default`, `static`, `private` methods allowed. |
+| **Variables**      | Can have instance, static, and final variables.       | All variables are `public static final` (implicitly).                      |
+| **Constructors**   | Can have constructors.                                | Cannot have constructors.                                                  |
+| **Inheritance**    | A class `extends` only one abstract class. (Single inheritance) | A class `implements` multiple interfaces. (Multiple inheritance of type)     |
+| **Access Modifiers** | Methods can have any access modifier.                | Methods are `public abstract` by default (before Java 9).                  |
+| **Purpose**        | To provide a common base class for related objects, sharing some implementation. | To define a contract for behaviors, promoting loose coupling.                |
+
+*   **Benefits:**
+    *   **Complexity Management:** Hides complex implementation details.
+    *   **Maintainability:** Changes to implementation details don't affect external code.
+    *   **Enhances Security:** Only essential information is exposed.
+    *   **Promotes Reusability (Interfaces):** Defines a common contract.
+    *   **Achieves Multiple Inheritance (Interfaces):** Of behavior, not state.
+
+#### Example: Abstraction (Abstract Class & Interface)
+
+```java
+// --- Abstract Class Example ---
+abstract class Vehicle {
+    String brand;
+
+    public Vehicle(String brand) {
+        this.brand = brand;
+    }
+
+    // Abstract method (no body, must be implemented by subclasses)
+    public abstract void start();
+
+    // Concrete method (has body)
+    public void stop() {
+        System.out.println(brand + " vehicle stopped.");
+    }
+}
+
+class Car extends Vehicle {
+    public Car(String brand) {
+        super(brand);
+    }
+
+    @Override
+    public void start() {
+        System.out.println(brand + " car started with a key.");
+    }
+}
+
+class Motorcycle extends Vehicle {
+    public Motorcycle(String brand) {
+        super(brand);
+    }
+
+    @Override
+    public void start() {
+        System.out.println(brand + " motorcycle started with a kick.");
+    }
+}
+
+// --- Interface Example ---
+interface Flyable {
+    // All interface methods are public abstract implicitly before Java 8
+    void fly();
+
+    // From Java 8, default method with implementation
+    default void glide() {
+        System.out.println("Gliding smoothly through the air.");
+    }
+
+    // From Java 8, static method
+    static void displayFlyingInstructions() {
+        System.out.println("Flying requires lift and thrust.");
+    }
+}
+
+class Bird implements Flyable {
+    String name;
+
+    public Bird(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void fly() {
+        System.out.println(name + " is flapping its wings to fly.");
+    }
+}
+
+class Airplane implements Flyable {
+    String model;
+
+    public Airplane(String model) {
+        this.model = model;
+    }
+
+    @Override
+    public void fly() {
+        System.out.println(model + " is using engines to fly.");
+    }
+}
+
+
+public class AbstractionDemo {
+    public static void main(String[] args) {
+        System.out.println("--- Abstract Class Demo ---");
+        // Vehicle v = new Vehicle("Generic"); // Compile-time error: Cannot instantiate abstract class
+        Car myCar = new Car("Toyota");
+        myCar.start(); // Toyota car started with a key.
+        myCar.stop();  // Toyota vehicle stopped.
+
+        Motorcycle myMotorcycle = new Motorcycle("Harley");
+        myMotorcycle.start(); // Harley motorcycle started with a kick.
+        myMotorcycle.stop();  // Harley vehicle stopped.
+
+        System.out.println("\n--- Interface Demo ---");
+        Bird eagle = new Bird("Eagle");
+        eagle.fly();   // Eagle is flapping its wings to fly.
+        eagle.glide(); // Gliding smoothly through the air.
+
+        Airplane boeing = new Airplane("Boeing 747");
+        boeing.fly();  // Boeing 747 is using engines to fly.
+        boeing.glide(); // Gliding smoothly through the air.
+
+        Flyable.displayFlyingInstructions(); // Static method call on interface
+    }
+}
+```
+
+---
+
+## III. Supporting OOPS Concepts in Java
+
+### 1. Constructors
+*   **Definition:** A special type of method that is used to initialize objects. It is invoked automatically when an object of a class is created using the `new` keyword.
+*   **Characteristics:**
+    *   Must have the same name as the class.
+    *   Has no explicit return type (not even `void`).
+    *   Can have parameters to initialize instance variables.
+*   **Types of Constructors:**
+    *   **Default Constructor:** If you don't provide any constructor, Java compiler provides a default (no-argument) constructor implicitly. It initializes instance variables with default values (0 for numbers, `null` for objects, `false` for booleans).
+    *   **No-argument Constructor:** A constructor explicitly defined by you that takes no arguments.
+    *   **Parameterized Constructor:** A constructor that takes one or more arguments. It is used to initialize instance variables with specific values provided during object creation.
+*   **`this()`:** Used to call another constructor within the same class (constructor chaining). Must be the first statement in the constructor.
+*   **`super()`:** Used to call the superclass's constructor. Must be the first statement in the constructor.
+
+#### Example: Constructors
+
+```java
+class Box {
+    double width;
+    double height;
+    double depth;
+
+    // 1. Default constructor (provided implicitly if no others are defined)
+    // Box() {
+    //    width = 0; height = 0; depth = 0;
+    // }
+
+    // 2. No-argument constructor (explicitly defined)
+    public Box() {
+        System.out.println("Creating a Box with default dimensions.");
+        this.width = -1; // Indicate uninitialized/default
+        this.height = -1;
+        this.depth = -1;
+    }
+
+    // 3. Parameterized constructor
+    public Box(double width, double height, double depth) {
+        System.out.println("Creating a Box with specified dimensions.");
+        this.width = width;
+        this.height = height;
+        this.depth = depth;
+    }
+
+    // Constructor with one parameter (for cubes)
+    public Box(double side) {
+        // Constructor chaining: calls the 3-parameter constructor
+        this(side, side, side);
+        System.out.println("This is a Cube box.");
+    }
+
+    public double getVolume() {
+        return width * height * depth;
+    }
+
+    public static void main(String[] args) {
+        Box box1 = new Box();                    // Calls no-arg constructor
+        System.out.println("Volume of box1: " + box1.getVolume()); // -1.0
+
+        Box box2 = new Box(10, 20, 15);          // Calls parameterized constructor
+        System.out.println("Volume of box2: " + box2.getVolume()); // 3000.0
+
+        Box cube = new Box(7);                   // Calls single-parameter constructor
+        System.out.println("Volume of cube: " + cube.getVolume());   // 343.0
+    }
+}
+```
+
+### 2. `this` Keyword
+*   **Definition:** A reference variable in Java that refers to the current object.
+*   **Uses:**
+    *   **To refer to current class instance variables:** To differentiate between instance variables and local variables (parameters) if they have the same name. (e.g., `this.name = name;`)
+    *   **To invoke current class methods:** `this.myMethod();` (though often implicit).
+    *   **To invoke current class constructor:** `this(arguments);` (constructor chaining, must be the first statement).
+    *   **To return the current class instance:** `return this;`
+
+### 3. `super` Keyword
+*   **Definition:** A reference variable in Java that refers to the immediate parent class object.
+*   **Uses:**
+    *   **To refer to immediate parent class instance variables:** If subclass and superclass have same named fields. (e.g., `super.value = 10;`)
+    *   **To invoke immediate parent class methods:** If subclass overrides a method from the superclass and you want to call the superclass's version. (e.g., `super.parentMethod();`)
+    *   **To invoke immediate parent class constructor:** `super(arguments);` (must be the first statement in the constructor).
+
+#### Example: `this` and `super`
+
+```java
+class Vehicle_ { // Renamed to avoid clash with previous Vehicle class
+    int speed = 50;
+
+    public Vehicle_(int speed) {
+        this.speed = speed;
+        System.out.println("Vehicle speed: " + this.speed);
+    }
+
+    public void displaySpeed() {
+        System.out.println("Vehicle_ current speed: " + speed);
+    }
+}
+
+class Car_ extends Vehicle_ {
+    int speed = 100; // This 'speed' shadows the 'speed' in Vehicle_
+
+    public Car_() {
+        super(30); // Calls Vehicle_(int speed) constructor, setting parent's speed to 30
+        System.out.println("Car_ constructor called.");
+    }
+
+    public void displaySpeeds() {
+        System.out.println("Car_ speed: " + this.speed); // Refers to Car_'s speed (100)
+        System.out.println("Vehicle_ speed: " + super.speed); // Refers to Vehicle_'s speed (30)
+        displaySpeed(); // Calls Car_'s displaySpeed, which uses its own 'speed' (100)
+        super.displaySpeed(); // Calls Vehicle_'s displaySpeed, which uses its own 'speed' (30)
+    }
+
+    public void accelerate() {
+        System.out.println("Car_ is accelerating.");
+        this.displaySpeeds(); // Calls current object's displaySpeeds
+    }
+
+    public static void main(String[] args) {
+        Car_ myCar = new Car_();
+        myCar.displaySpeeds();
+        myCar.accelerate();
+    }
+}
+/*
+Output:
+Vehicle speed: 30
+Car_ constructor called.
+Car_ speed: 100
+Vehicle_ speed: 30
+Vehicle_ current speed: 100
+Vehicle_ current speed: 30
+Car_ is accelerating.
+Car_ speed: 100
+Vehicle_ speed: 30
+Vehicle_ current speed: 100
+Vehicle_ current speed: 30
+*/
+```
+
+### 4. Access Modifiers
+*   **Definition:** Keywords that set the accessibility (visibility) of classes, constructors, methods, and fields.
+*   **Types in Java:**
+    1.  **`public`:** Accessible from anywhere (within the same package or from other packages).
+    2.  **`protected`:** Accessible within the same package, and by subclasses in any package.
+    3.  **`default` (package-private):** Accessible only within the same package. No keyword is used.
+    4.  **`private`:** Accessible only within the class where it is declared.
+
+### 5. `final` Keyword
+*   **Definition:** A non-access modifier used for classes, methods, and variables.
+*   **Uses:**
+    *   **`final` variable:** Makes the variable a constant (value cannot be changed after initialization).
+    *   **`final` method:** Prevents method overriding by subclasses.
+    *   **`final` class:** Prevents a class from being inherited (no subclasses can be created).
+
+### 6. `static` Keyword
+*   **Definition:** A non-access modifier primarily used for memory management. It belongs to the class itself, rather than to any specific instance of the class.
+*   **Uses:**
+    *   **`static` variable (Class Variable):** A single copy of the variable is created and shared among all instances of the class. Accessed using `ClassName.variableName`.
+    *   **`static` method (Class Method):** Can be invoked without creating an instance of the class. Can only access static data and can only call static methods directly. Cannot use `this` or `super`.
+    *   **`static` block:** Used to initialize static data members. Executed once when the class is loaded into memory.
+    *   **`static` nested class:** A nested class that is associated with its outer class, not with an instance of the outer class.
+
+#### Example: `final` and `static`
+
+```java
+class Config {
+    // final variable (constant)
+    public static final String APP_NAME = "MyAwesomeApp";
+    public final double VERSION = 1.0; // instance final variable
+
+    // static variable
+    public static int counter = 0;
+
+    // static block
+    static {
+        System.out.println("Config class loaded. Static block executed.");
+        counter = 100; // Initialize static counter
+    }
+
+    // instance block (executed before constructor)
+    {
+        System.out.println("Instance block executed for object creation.");
+    }
+
+    public Config() {
+        System.out.println("Config constructor called.");
+        counter++;
+    }
+
+    // final method - cannot be overridden
+    public final void displayVersion() {
+        System.out.println("App Name: " + APP_NAME + ", Version: " + VERSION);
+    }
+
+    // static method
+    public static void showCounter() {
+        System.out.println("Current Counter: " + counter);
+    }
+}
+
+// final class - cannot be extended
+final class ReadOnlyData {
+    String data = "Important Data";
+}
+
+// class RestrictedClass extends ReadOnlyData {} // Compile-time error
+
+public class FinalStaticDemo {
+    public static void main(String[] args) {
+        System.out.println("--- Starting Main ---");
+
+        System.out.println(Config.APP_NAME); // Access static final variable
+        Config.showCounter(); // Access static method (Counter: 100)
+
+        Config c1 = new Config();
+        c1.displayVersion();
+        Config.showCounter(); // Counter: 101
+
+        Config c2 = new Config();
+        Config.showCounter(); // Counter: 102
+
+        // c1.APP_NAME = "NewName"; // Compile-time error: cannot assign a value to final variable APP_NAME
+        // c1.VERSION = 2.0;       // Compile-time error: cannot assign a value to final variable VERSION
+    }
+}
+/*
+Output:
+--- Starting Main ---
+Config class loaded. Static block executed.
+MyAwesomeApp
+Current Counter: 100
+Instance block executed for object creation.
+Config constructor called.
+App Name: MyAwesomeApp, Version: 1.0
+Current Counter: 101
+Instance block executed for object creation.
+Config constructor called.
+Current Counter: 102
+*/
+```
+
+---
+
+## IV. Benefits of OOPS in Java
+
+1.  **Modularity:** Objects are self-contained, making it easier to manage and modify code.
+2.  **Reusability:** Inheritance allows code to be reused in different parts of the application or in future projects.
+3.  **Maintainability:** Easier to locate and fix issues due to modular design and encapsulation.
+4.  **Extensibility:** New features and functionalities can be added easily without disturbing existing code.
+5.  **Security:** Encapsulation helps protect data from unauthorized access.
+6.  **Better Design:** Helps in creating a clear, well-structured, and easy-to-understand system.
+
+---
+
+This comprehensive overview covers the primary OOPS concepts as applied in Java, providing definitions, examples, and the underlying rationale for each.

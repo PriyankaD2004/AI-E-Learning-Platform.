@@ -1,0 +1,405 @@
+Object-Oriented Programming System (OOPS) is a programming paradigm that organizes software design around data, or objects, rather than functions and logic. Java is a prominent object-oriented language. Understanding OOPS concepts is fundamental to writing robust, scalable, and maintainable Java applications.
+
+---
+
+## I. Core Concepts & Pillars of OOPS
+
+### 1. Class
+
+*   **Definition:** A class is a blueprint or a template for creating objects. It defines the properties (data/attributes/fields) and behaviors (methods/functions) that its objects will have.
+*   **Analogy:** If `Car` is a class, then the blueprint for manufacturing a car (detailing its model, color options, engine type, etc.) is the class.
+*   **In Java:**
+    ```java
+    class Car {
+        // Properties (Data/Fields)
+        String model;
+        String color;
+        int speed;
+
+        // Behaviors (Methods)
+        void start() {
+            System.out.println(model + " car started.");
+        }
+
+        void accelerate() {
+            speed += 10;
+            System.out.println(model + " speed is now: " + speed);
+        }
+
+        void stop() {
+            speed = 0;
+            System.out.println(model + " car stopped.");
+        }
+    }
+    ```
+
+### 2. Object
+
+*   **Definition:** An object is an instance of a class. It's a real-world entity that has a state (values of its properties) and behavior (actions it can perform).
+*   **Analogy:** If `Car` is a class, then your specific `Toyota Camry` (model: "Camry", color: "blue", speed: 60 mph) is an object of the `Car` class.
+*   **In Java:**
+    *   Objects are created using the `new` keyword.
+    *   An object's state is stored in its fields, and its behavior is exposed through methods.
+    ```java
+    public class Main {
+        public static void main(String[] args) {
+            Car myCar = new Car(); // Creating an object (instance) of Car class
+            myCar.model = "Camry";
+            myCar.color = "Blue";
+            myCar.speed = 0;
+
+            myCar.start();
+            myCar.accelerate(); // myCar speed is now: 10
+            myCar.stop();
+        }
+    }
+    ```
+*   **Constructor:** A special method used to initialize objects. It has the same name as the class and doesn't have a return type.
+    *   **Default Constructor:** If no constructor is defined, Java provides a default no-argument constructor.
+    *   **Parameterized Constructor:** Allows initializing object properties with values at the time of creation.
+    ```java
+    class Car {
+        String model;
+        String color;
+        int speed;
+
+        // Parameterized Constructor
+        public Car(String model, String color) {
+            this.model = model; // 'this' refers to the current object
+            this.color = color;
+            this.speed = 0; // Default initial speed
+        }
+        // ... (methods like start, accelerate, stop)
+    }
+
+    // Creating object with parameterized constructor
+    Car anotherCar = new Car("Civic", "Red");
+    ```
+
+---
+
+### The Four Pillars of OOPS:
+
+### 3. Encapsulation
+
+*   **Definition:** The bundling of data (attributes) and methods (behaviors) that operate on the data into a single unit (class). It restricts direct access to some of an object's components, meaning the internal state of an object is hidden from the outside world.
+*   **Goal:** Data hiding and protection.
+*   **How in Java:**
+    *   Declaring instance variables as `private`.
+    *   Providing `public` getter (accessor) and setter (mutator) methods to access and modify these private variables.
+*   **Analogy:** A capsule in medicine. You can use the capsule, but you don't directly manipulate the ingredients inside. The capsule provides a controlled interface.
+*   **Example:**
+    ```java
+    class Account {
+        private long accountNumber; // Private data
+        private double balance;     // Private data
+
+        // Constructor
+        public Account(long accountNumber, double initialBalance) {
+            this.accountNumber = accountNumber;
+            this.balance = initialBalance;
+        }
+
+        // Public Getter methods to access data
+        public long getAccountNumber() {
+            return accountNumber;
+        }
+
+        public double getBalance() {
+            return balance;
+        }
+
+        // Public Setter methods to modify data (with validation)
+        public void deposit(double amount) {
+            if (amount > 0) {
+                balance += amount;
+                System.out.println("Deposited: " + amount + ". New balance: " + balance);
+            } else {
+                System.out.println("Deposit amount must be positive.");
+            }
+        }
+
+        public void withdraw(double amount) {
+            if (amount > 0 && balance >= amount) {
+                balance -= amount;
+                System.out.println("Withdrew: " + amount + ". New balance: " + balance);
+            } else {
+                System.out.println("Insufficient balance or invalid amount.");
+            }
+        }
+    }
+    ```
+*   **Benefits:**
+    *   **Data Hiding:** Prevents direct, unauthorized access to sensitive data.
+    *   **Control over Data:** Allows validation logic in setter methods.
+    *   **Flexibility:** The internal implementation can change without affecting external code that uses the object.
+    *   **Maintainability:** Easier to debug and update parts of the code.
+
+### 4. Abstraction
+
+*   **Definition:** The process of showing only essential details to the user and hiding the complex implementation details. It focuses on "what" an object does rather than "how" it does it.
+*   **Goal:** Simplify complexity.
+*   **How in Java:**
+    *   **Abstract Classes:**
+        *   Declared using the `abstract` keyword.
+        *   Cannot be instantiated (cannot create objects).
+        *   Can have both abstract (without body) and concrete (with body) methods.
+        *   Subclasses must implement all abstract methods or be declared abstract themselves.
+    *   **Interfaces:**
+        *   A blueprint of a class.
+        *   By default, all methods are `public` and `abstract` (before Java 8, then `default` and `static` methods were allowed).
+        *   By default, all variables are `public`, `static`, and `final`.
+        *   Classes `implement` interfaces.
+        *   Achieves multiple inheritance of "type" (a class can implement multiple interfaces).
+*   **Analogy:** Driving a car. You use the steering wheel, pedals, and gear stick (the essential details) without needing to know the intricate workings of the engine, transmission, or electrical system (the hidden implementation).
+*   **Example (Abstract Class):**
+    ```java
+    abstract class Shape { // Abstract class
+        String color;
+
+        // Abstract method (no body)
+        abstract double calculateArea();
+
+        // Concrete method (with body)
+        public void displayColor() {
+            System.out.println("Shape color: " + color);
+        }
+
+        public Shape(String color) {
+            this.color = color;
+        }
+    }
+
+    class Circle extends Shape {
+        double radius;
+
+        public Circle(String color, double radius) {
+            super(color);
+            this.radius = radius;
+        }
+
+        // Implementing the abstract method
+        @Override
+        double calculateArea() {
+            return Math.PI * radius * radius;
+        }
+    }
+
+    // Main
+    // Shape s = new Shape("Red"); // Error: Cannot instantiate abstract class
+    Circle c = new Circle("Blue", 5.0);
+    System.out.println("Area of Circle: " + c.calculateArea());
+    c.displayColor();
+    ```
+*   **Example (Interface):**
+    ```java
+    interface Flyable { // Interface
+        void fly(); // Abstract method (public abstract by default)
+        // int MAX_SPEED = 1000; // public static final by default
+    }
+
+    class Airplane implements Flyable {
+        @Override
+        public void fly() {
+            System.out.println("Airplane is flying at high altitude.");
+        }
+    }
+
+    class Bird implements Flyable {
+        @Override
+        public void fly() {
+            System.out.println("Bird is flapping its wings to fly.");
+        }
+    }
+    ```
+*   **Benefits:**
+    *   **Reduces Complexity:** Hides complex implementation details, making the system easier to understand and use.
+    *   **Improved Maintainability:** Changes in internal implementation don't affect external code.
+    *   **Enhanced Security:** Allows control over what is exposed.
+    *   **Promotes Design Consistency:** Forces subclasses to implement specific methods.
+
+### 5. Inheritance
+
+*   **Definition:** A mechanism where one class (subclass/child class) acquires the properties and behaviors (fields and methods) of another class (superclass/parent class). It represents an "is-a" relationship.
+*   **Goal:** Code reusability and establishing a natural hierarchy.
+*   **How in Java:**
+    *   The `extends` keyword is used.
+    *   A class can only `extend` one other class (single inheritance for classes).
+*   **Analogy:** A child inherits features from its parent. A "Dog" `is-a` "Animal".
+*   **Types of Inheritance (Java Supports):**
+    *   **Single Inheritance:** One class extends another one class.
+    *   **Multilevel Inheritance:** A class extends a class, which in turn extends another class (e.g., `A -> B -> C`).
+    *   **Hierarchical Inheritance:** Multiple classes extend a single parent class (e.g., `B` and `C` extend `A`).
+    *   **Multiple Inheritance:** Not supported for classes in Java (to avoid diamond problem), but can be achieved using Interfaces.
+*   **Example:**
+    ```java
+    class Animal { // Parent class
+        String name;
+
+        public Animal(String name) {
+            this.name = name;
+        }
+
+        public void eat() {
+            System.out.println(name + " is eating.");
+        }
+    }
+
+    class Dog extends Animal { // Child class extending Animal
+        String breed;
+
+        public Dog(String name, String breed) {
+            super(name); // Calls parent class constructor
+            this.breed = breed;
+        }
+
+        public void bark() {
+            System.out.println(name + " barks: Woof!");
+        }
+
+        // Method Overriding (see Polymorphism section)
+        @Override
+        public void eat() {
+            System.out.println(name + " (a " + breed + ") eats dog food.");
+        }
+    }
+
+    public class Main {
+        public static void main(String[] args) {
+            Dog myDog = new Dog("Buddy", "Golden Retriever");
+            myDog.eat();  // Inherited method, potentially overridden
+            myDog.bark(); // Dog-specific method
+            // System.out.println(myDog.name); // Accessing inherited property
+        }
+    }
+    ```
+*   **Benefits:**
+    *   **Code Reusability:** Avoids writing the same code multiple times.
+    *   **Extensibility:** New functionalities can be added without modifying existing code.
+    *   **Method Overriding:** Allows child classes to provide specific implementations for parent class methods (Polymorphism).
+
+### 6. Polymorphism
+
+*   **Definition:** "Many forms." It is the ability of an object to take on many forms. In OOPS, it refers to the ability of a method or object to behave differently based on the context or the type of object.
+*   **Goal:** Flexibility and dynamic behavior.
+*   **How in Java:**
+    *   **Compile-time Polymorphism (Static Polymorphism / Method Overloading):**
+        *   Methods with the same name but different parameter lists (number, type, or order of arguments) within the same class.
+        *   Decided at compile time.
+        *   **Example:**
+            ```java
+            class Calculator {
+                // Method with two int parameters
+                public int add(int a, int b) {
+                    return a + b;
+                }
+                // Method with three int parameters (overloaded)
+                public int add(int a, int b, int c) {
+                    return a + b + c;
+                }
+                // Method with two double parameters (overloaded)
+                public double add(double a, double b) {
+                    return a + b;
+                }
+            }
+            ```
+    *   **Runtime Polymorphism (Dynamic Polymorphism / Method Overriding):**
+        *   A subclass provides a specific implementation for a method that is already defined in its superclass.
+        *   The method signature (name, return type, parameters) must be the same.
+        *   Decided at runtime (Dynamic Method Dispatch).
+        *   Achieved through inheritance and upcasting (referring to a subclass object using a superclass reference).
+        *   The `@Override` annotation is a good practice to indicate overriding.
+        *   **Example (using `Animal` and `Dog` from Inheritance):**
+            ```java
+            // In Dog class (from previous example)
+            class Dog extends Animal {
+                // ... constructor and bark method ...
+                @Override // Optional, but good practice
+                public void eat() {
+                    System.out.println(name + " (a " + breed + ") eats dog food.");
+                }
+            }
+
+            public class Main {
+                public static void main(String[] args) {
+                    Animal myAnimal = new Animal("Generic Animal");
+                    Animal myDog = new Dog("Buddy", "Golden Retriever"); // Upcasting
+
+                    myAnimal.eat(); // Output: Generic Animal is eating.
+                    myDog.eat();    // Output: Buddy (a Golden Retriever) eats dog food.
+                                    // Calls the overridden method in Dog class at runtime.
+                }
+            }
+            ```
+*   **Benefits:**
+    *   **Flexibility:** A single interface can be used to represent different underlying types.
+    *   **Extensibility:** New subclasses can be added without changing existing code.
+    *   **Code Readability:** Easier to read and understand code.
+
+---
+
+## II. Other Important OOPS Concepts in Java
+
+### 1. `this` Keyword
+
+*   Refers to the current object.
+*   **Uses:**
+    *   To differentiate between instance variables and local variables if they have the same name (common in constructors and setters).
+    *   To call one constructor from another constructor in the same class (constructor chaining: `this(...)`).
+    *   To pass the current object as a parameter to another method.
+
+### 2. `super` Keyword
+
+*   Refers to the immediate parent class object.
+*   **Uses:**
+    *   To call the parent class's constructor (`super(...)`). Must be the first statement in the child constructor.
+    *   To access parent class's methods if they are overridden in the child class (`super.methodName()`).
+    *   To access parent class's instance variables if they are hidden by child class variables (`super.variableName`).
+
+### 3. Access Modifiers
+
+Control the visibility (accessibility) of classes, constructors, methods, and variables.
+
+*   **`public`:** Accessible from anywhere.
+*   **`protected`:** Accessible within the same package and by subclasses (even in different packages).
+*   **`default` (no keyword):** Accessible only within the same package.
+*   **`private`:** Accessible only within the class where it's declared. (Essential for encapsulation).
+
+### 4. `final` Keyword
+
+*   **`final` variable:** Value cannot be changed once assigned (becomes a constant).
+*   **`final` method:** Cannot be overridden by subclasses.
+*   **`final` class:** Cannot be inherited (extended) by other classes.
+
+### 5. `static` Keyword
+
+*   **`static` variable (class variable):** Belongs to the class, not to any specific object. Only one copy exists, shared by all objects of the class.
+*   **`static` method (class method):** Belongs to the class. Can only access static variables and call static methods. Cannot use `this` or `super`.
+*   **`static` block:** Used to initialize static variables. Executed once when the class is loaded.
+*   **`static` nested class:** Can be instantiated without an outer class object.
+
+### 6. Association, Aggregation, Composition ("Has-a" Relationships)
+
+These represent different types of "has-a" relationships between objects.
+
+*   **Association:** A general "has-a" relationship where two classes are related to each other. They can exist independently.
+    *   *Example:* A `Teacher` `teaches` `Students`. (Teacher can exist without students, students without a teacher).
+*   **Aggregation:** A "has-a" relationship representing a whole-part relationship, but the part can exist independently of the whole. It's a "weak" relationship.
+    *   *Example:* A `Department` `has-a` `Professor`. A Professor can exist without being part of a specific department, and can be assigned to multiple departments or move departments.
+*   **Composition:** A "part-of" relationship where the part cannot exist independently of the whole. It's a "strong" relationship. If the whole object is destroyed, its parts are also destroyed.
+    *   *Example:* A `House` `has-a` `Room`. A room cannot exist independently of the house; if the house is demolished, the room also ceases to exist.
+
+---
+
+## III. Benefits of OOPS
+
+1.  **Modularity:** Objects create self-contained modules, simplifying complex systems.
+2.  **Reusability:** Inheritance and composition allow code reuse, reducing development time.
+3.  **Maintainability:** Encapsulation and abstraction make it easier to modify and debug code without affecting other parts of the system.
+4.  **Flexibility/Extensibility:** Polymorphism allows adding new functionalities with minimal changes to existing code.
+5.  **Security:** Encapsulation protects data from unauthorized access.
+6.  **Better Design:** Encourages a clear, organized structure by modeling real-world entities.
+
+---
+
+This detailed overview covers the fundamental and related OOPS concepts in Java, providing definitions, examples, and the underlying principles behind each.

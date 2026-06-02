@@ -1,0 +1,269 @@
+These detailed notes cover the fundamental built-in datatypes in Python, essential for understanding how Python handles and stores data.
+
+---
+
+## Python Datatypes: Detailed Notes
+
+### Introduction to Datatypes
+
+*   **Definition:** Datatypes classify the type of value a variable can hold. They define the operations that can be performed on the data and the way it is stored in memory.
+*   **Dynamic Typing:** Python is dynamically typed, meaning you don't explicitly declare the type of a variable when you create it. Python infers the type at runtime.
+    ```python
+    x = 10         # x is an int
+    y = "hello"    # y is a str
+    z = [1, 2, 3]  # z is a list
+    ```
+*   **`type()` function:** You can check the datatype of any variable or value using the `type()` function.
+    ```python
+    print(type(x))   # Output: <class 'int'>
+    print(type(y))   # Output: <class 'str'>
+    ```
+*   **Mutability vs. Immutability:** A crucial concept in Python.
+    *   **Mutable:** The object's state (its value or elements) can be changed *after* it's created. (e.g., lists, dictionaries, sets).
+    *   **Immutable:** The object's state *cannot* be changed after it's created. Any "modification" actually creates a new object. (e.g., numbers, strings, tuples, frozensets).
+
+---
+
+### I. Numeric Types
+
+Represent numbers. All numeric types in Python are **immutable**.
+
+#### 1. `int` (Integers)
+
+*   **Description:** Whole numbers (positive, negative, or zero) without a fractional part.
+*   **Characteristics:**
+    *   Arbitrary precision: Can store integers of any size, limited only by available memory.
+    *   Immutable.
+*   **Syntax & Examples:**
+    ```python
+    age = 30
+    big_number = 12345678901234567890
+    negative_num = -100
+    ```
+*   **Operations:** Arithmetic (`+`, `-`, `*`, `/`, `//`, `%`, `**`), bitwise operations.
+
+#### 2. `float` (Floating-Point Numbers)
+
+*   **Description:** Real numbers with a decimal point.
+*   **Characteristics:**
+    *   Represented using double-precision (64-bit) floating-point numbers (IEEE 754 standard).
+    *   Precision limitations: Floating-point arithmetic can sometimes lead to small inaccuracies due to how they are stored.
+    *   Immutable.
+*   **Syntax & Examples:**
+    ```python
+    price = 19.99
+    pi = 3.14159
+    temp = -273.15
+    scientific_notation = 1.23e-5  # 0.0000123
+    ```
+*   **Operations:** Arithmetic operations.
+
+#### 3. `complex` (Complex Numbers)
+
+*   **Description:** Numbers with a real and an imaginary part. The imaginary part is denoted by `j` or `J`.
+*   **Characteristics:**
+    *   Immutable.
+*   **Syntax & Examples:**
+    ```python
+    z1 = 2 + 3j
+    z2 = -1j
+    z3 = complex(5, -2)  # Creates 5 - 2j
+    ```
+*   **Operations:** Arithmetic operations. Access real/imaginary parts: `z1.real`, `z1.imag`.
+
+---
+
+### II. Boolean Type
+
+#### 4. `bool` (Booleans)
+
+*   **Description:** Represents truth values. Only two possible values: `True` or `False`.
+*   **Characteristics:**
+    *   Subtype of `int`: `True` evaluates to `1`, `False` to `0`.
+    *   Immutable.
+*   **Syntax & Examples:**
+    ```python
+    is_active = True
+    is_admin = False
+    ```
+*   **Operations:** Logical operators (`and`, `or`, `not`). Used in conditional statements and loops.
+    ```python
+    if is_active and not is_admin:
+        print("User is active but not an admin.")
+    ```
+
+---
+
+### III. Sequence Types
+
+Ordered collections of items. Items can be accessed by their index.
+
+#### 5. `str` (Strings)
+
+*   **Description:** An ordered sequence of characters, used to represent text.
+*   **Characteristics:**
+    *   **Immutable**: Cannot change individual characters after creation. Operations like concatenation create new strings.
+    *   Ordered: Elements have a defined order.
+    *   Indexed: Characters can be accessed using zero-based indexing (e.g., `my_string[0]`).
+    *   Slicing: Portions of strings can be extracted.
+    *   Unicode support: Python strings handle a wide range of characters.
+*   **Syntax & Examples:**
+    ```python
+    name = "Alice"
+    message = 'Hello World'
+    multi_line = """This is a
+    multi-line string."""
+    empty_string = ""
+    ```
+*   **Operations:** Concatenation (`+`), repetition (`*`), indexing, slicing, numerous string methods (`.upper()`, `.lower()`, `.split()`, `.replace()`, `.find()`, etc.).
+    ```python
+    print(name[0])       # Output: A
+    print(message[0:5])  # Output: Hello
+    ```
+
+#### 6. `list` (Lists)
+
+*   **Description:** An ordered, mutable sequence of items. Items can be of different datatypes.
+*   **Characteristics:**
+    *   **Mutable**: Elements can be added, removed, or changed after creation.
+    *   Ordered: Elements maintain their insertion order.
+    *   Indexed: Access elements using zero-based indexing.
+    *   Allows duplicates: Can contain multiple identical items.
+    *   Heterogeneous: Can store items of different types.
+*   **Syntax & Examples:**
+    ```python
+    my_list = [1, "hello", 3.14, True]
+    empty_list = []
+    nested_list = [[1, 2], [3, 4]]
+    ```
+*   **Operations:**
+    *   Accessing elements: `my_list[0]`
+    *   Slicing: `my_list[1:3]`
+    *   Adding: `append()`, `insert()`, `extend()`
+    *   Removing: `remove()`, `pop()`, `clear()`
+    *   Modifying: `my_list[0] = 10`
+    *   Sorting: `sort()` (in-place), `sorted()` (returns new list)
+    *   Concatenation (`+`), repetition (`*`)
+
+#### 7. `tuple` (Tuples)
+
+*   **Description:** An ordered, immutable sequence of items. Similar to lists, but once created, their contents cannot be changed.
+*   **Characteristics:**
+    *   **Immutable**: Cannot add, remove, or change elements after creation.
+    *   Ordered: Elements maintain their insertion order.
+    *   Indexed: Access elements using zero-based indexing.
+    *   Allows duplicates.
+    *   Heterogeneous: Can store items of different types.
+    *   Often used for fixed collections of related data (e.g., coordinates, database records).
+*   **Syntax & Examples:**
+    ```python
+    my_tuple = (1, "hello", 3.14)
+    single_item_tuple = (5,)  # Comma is essential for single-item tuple
+    empty_tuple = ()
+    coordinates = 10, 20      # Tuple packing (parentheses optional)
+    ```
+*   **Operations:**
+    *   Accessing elements: `my_tuple[0]`
+    *   Slicing: `my_tuple[1:]`
+    *   Concatenation (`+`), repetition (`*`) (these create new tuples)
+    *   **Cannot modify** (e.g., `my_tuple[0] = 10` will raise an error)
+
+---
+
+### IV. Set Types
+
+Unordered collections of unique items.
+
+#### 8. `set` (Sets)
+
+*   **Description:** An unordered, mutable collection of *unique* and *hashable* items.
+*   **Characteristics:**
+    *   **Mutable**: Can add or remove elements.
+    *   Unordered: Elements do not have a defined order, so indexing is not supported.
+    *   **Unique elements only**: Duplicate items are automatically removed.
+    *   Elements must be hashable (immutable types like numbers, strings, tuples). Lists and dictionaries cannot be elements of a set.
+*   **Syntax & Examples:**
+    ```python
+    my_set = {1, 2, 3, 2, 4}  # Result: {1, 2, 3, 4}
+    empty_set = set()         # {} creates an empty dictionary
+    ```
+*   **Operations:**
+    *   Adding: `add()`
+    *   Removing: `remove()`, `discard()`, `pop()`
+    *   Set operations: Union (`|`), intersection (`&`), difference (`-`), symmetric difference (`^`).
+    *   Checking membership: `in` operator.
+
+#### 9. `frozenset` (Frozensets)
+
+*   **Description:** An unordered, immutable version of a set.
+*   **Characteristics:**
+    *   **Immutable**: Cannot add or remove elements after creation.
+    *   Unordered, unique elements, elements must be hashable.
+    *   Can be used as elements in other sets or as keys in dictionaries (since they are hashable).
+*   **Syntax & Examples:**
+    ```python
+    fs = frozenset([1, 2, 3, 2]) # Result: frozenset({1, 2, 3})
+    ```
+*   **Operations:** Supports all set operations that do not modify the set (union, intersection, etc.).
+
+---
+
+### V. Mapping Type
+
+#### 10. `dict` (Dictionaries)
+
+*   **Description:** An unordered (Python 3.6 and earlier), *ordered* (Python 3.7+), mutable collection of key-value pairs.
+*   **Characteristics:**
+    *   **Mutable**: Can add, remove, or modify key-value pairs.
+    *   Keys are unique: Each key must be distinct within a dictionary.
+    *   Keys must be **hashable** (immutable types like strings, numbers, tuples). Lists and dictionaries cannot be keys.
+    *   Values can be of any datatype and can be duplicated.
+    *   Efficient lookup: Accessing values by key is very fast.
+*   **Syntax & Examples:**
+    ```python
+    person = {"name": "Alice", "age": 30, "city": "New York"}
+    empty_dict = {}
+    ```
+*   **Operations:**
+    *   Accessing values: `person["name"]` or `person.get("name")`
+    *   Adding/modifying: `person["email"] = "alice@example.com"`
+    *   Removing: `del person["city"]`, `person.pop("age")`
+    *   Getting keys, values, items: `person.keys()`, `person.values()`, `person.items()`
+    *   Merging: `person.update({"occupation": "Engineer"})`
+
+---
+
+### VI. Other Important Datatypes
+
+#### 11. `NoneType` (`None`)
+
+*   **Description:** Represents the absence of a value or a null value. It's a special constant.
+*   **Characteristics:**
+    *   Singleton object: There's only one `None` object in Python.
+    *   Evaluates to `False` in a boolean context (`if None:` is `False`).
+*   **Syntax & Examples:**
+    ```python
+    result = None
+    def my_function():
+        pass # This function implicitly returns None
+    ```
+*   **Usage:** Often used as a default argument, to initialize a variable that will later hold a value, or as the return value of functions that don't explicitly return anything.
+
+---
+
+### Summary of Mutability
+
+| Datatype         | Mutable? | Key Characteristics                                 |
+| :--------------- | :------- | :-------------------------------------------------- |
+| `int`, `float`, `complex` | No       | Arbitrary precision (int), decimal values (float)   |
+| `bool`           | No       | `True` or `False`                                   |
+| `str`            | No       | Ordered, indexed sequence of characters             |
+| `tuple`          | No       | Ordered, indexed sequence of items                  |
+| `frozenset`      | No       | Unordered, unique, hashable items                   |
+| `list`           | Yes      | Ordered, indexed, heterogeneous collection          |
+| `dict`           | Yes      | Key-value pairs, ordered (3.7+), keys are hashable  |
+| `set`            | Yes      | Unordered, unique, hashable items                   |
+
+---
+
+Understanding these fundamental datatypes and their properties (especially mutability) is crucial for writing efficient, correct, and robust Python code.

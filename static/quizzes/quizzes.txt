@@ -1,0 +1,126 @@
+
+
+### Quiz on python
+json
+[
+  {
+    "question": "Which of the following is NOT a valid data type in Python?",
+    "options": ["int", "float", "boolean", "character"],
+    "correct_answer": "character",
+    "explanation": "Python does not have a 'character' data type. Single characters are represented as strings of length one."
+  },
+  {
+    "question": "What is the output of the following code snippet?\n\n
+
+### Quiz on python
+json
+[
+  {
+    "question": "Which of the following data types is immutable in Python?",
+    "options": ["List", "Dictionary", "Tuple", "Set"],
+    "correct_answer": "Tuple",
+    "explanation": "Tuples are immutable, meaning their elements cannot be changed after creation. Lists, dictionaries, and sets are mutable."
+  },
+  {
+    "question": "What is the purpose of the 'if __name__ == \"__main__\":' block in Python?",
+    "options": ["To define a main function.", "To prevent the code from being executed when the script is imported as a module.", "To specify the encoding of the file.", "To declare global variables."],
+    "correct_answer": "To prevent the code from being executed when the script is imported as a module.",
+    "explanation": "This block ensures that the code within it is only executed when the script is run directly, not when it's imported as a module into another script."
+  },
+  {
+    "question": "Which of the following is the correct way to open a file named 'my_file.txt' in read mode in Python?",
+    "options": ["open('my_file.txt', 'w')", "file = open('my_file.txt', 'r')", "open('my_file.txt')", "file.open('my_file.txt', 'read')"],
+    "correct_answer": "file = open('my_file.txt', 'r')",
+    "explanation": "The 'open()' function is used to open a file. The first argument is the filename, and the second argument specifies the mode ('r' for read, 'w' for write, 'a' for append, etc.). The returned file object should be assigned to a variable."
+  },
+  {
+    "question": "What is the output of the following code? `print(2 ** 3 + 5 % 2)`",
+    "options": ["9", "8", "1", "10"],
+    "correct_answer": "9",
+    "explanation": "The `**` operator represents exponentiation (2 ** 3 = 8), and the `%` operator represents the modulo (remainder) operation (5 % 2 = 1).  8 + 1 = 9."
+  },
+  {
+    "question": "Which of the following is NOT a built-in function in Python?",
+    "options": ["print()", "len()", "sort()", "range()"],
+    "correct_answer": "sort()",
+    "explanation": "While `sort()` can be used to sort lists using the list.sort() method, it is not a built-in function. The other functions are built-in (print(), len(), range())."
+  }
+]
+
+
+### Quiz on python
+
+
+### Quiz on python
+
+
+### Quiz on python
+
+
+### Quiz on python
+[
+  {
+    "question": "Which of the following is the correct way to create an empty list in Python?",
+    "options": ["my_list = []", "my_list = {}", "my_list = ()", "my_list = list.new()"],
+    "correct_answer": "my_list = []",
+    "explanation": "In Python, square brackets `[]` are used to define a list. An empty pair of square brackets creates an empty list."
+  },
+  {
+    "question": "What is the primary keyword used to define a function in Python?",
+    "options": ["function", "define", "def", "func"],
+    "correct_answer": "def",
+    "explanation": "Functions in Python are defined using the `def` keyword, followed by the function name, parentheses `()`, and a colon `:`."
+  },
+  {
+    "question": "Which statement is used to exit a loop prematurely in Python?",
+    "options": ["continue", "pass", "break", "return"],
+    "correct_answer": "break",
+    "explanation": "The `break` statement terminates the current loop entirely and transfers control to the statement immediately following the loop. `continue` skips the rest of the current iteration and proceeds to the next."
+  },
+  {
+    "question": "What will be the output of `print(type(True))` in Python?",
+    "options": ["<class 'bool'>", "<class 'int'>", "<class 'str'>", "<class 'float'>"],
+    "correct_answer": "<class 'bool'>",
+    "explanation": "`True` and `False` are boolean literals in Python, belonging to the `bool` class."
+  },
+  {
+    "question": "How do you handle potential errors or exceptions in Python?",
+    "options": ["using if-else statements", "using try-except blocks", "using catch-throw statements", "using finally-do blocks"],
+    "correct_answer": "using try-except blocks",
+    "explanation": "Python uses `try-except` blocks to handle exceptions. Code that might raise an exception is placed inside the `try` block, and the `except` block handles specific exceptions that occur."
+  }
+]
+
+### Quiz on 7th standard science
+[
+  {
+    "question": "Which of the following is NOT required for photosynthesis?",
+    "options": ["Carbon dioxide", "Oxygen", "Water", "Sunlight"],
+    "correct_answer": "Oxygen",
+    "explanation": "Photosynthesis is the process by which green plants use sunlight, water, and carbon dioxide to create their own food (glucose) and release oxygen as a byproduct. Oxygen is produced, not consumed, during photosynthesis."
+  },
+  {
+    "question": "Which mode of heat transfer does not require any medium?",
+    "options": ["Conduction", "Convection", "Radiation", "All of the above"],
+    "correct_answer": "Radiation",
+    "explanation": "Conduction and convection require a material medium (solid, liquid, or gas) for heat transfer. Radiation, however, can transfer heat through electromagnetic waves, even in a vacuum, like how heat from the sun reaches Earth."
+  },
+  {
+    "question": "Which natural indicator turns magenta (dark pink) in an acidic solution?",
+    "options": ["Turmeric", "China rose indicator", "Litmus", "Common salt solution"],
+    "correct_answer": "China rose indicator",
+    "explanation": "China rose indicator solution changes colour based on the acidity or basicity of a substance. It turns magenta (dark pink) in acidic solutions and green in basic solutions. Turmeric remains yellow in acid, and blue litmus turns red in acid."
+  },
+  {
+    "question": "The heating effect of electric current is primarily utilized in which of the following devices?",
+    "options": ["Electric bell", "Electromagnet", "Electric fuse", "Electric motor"],
+    "correct_answer": "Electric fuse",
+    "explanation": "An electric fuse works on the heating effect of electric current. When the current exceeds a safe limit, the fuse wire heats up, melts, and breaks the circuit, protecting appliances. Electric bells, electromagnets, and electric motors primarily use the magnetic effect of electric current."
+  },
+  {
+    "question": "Which of the following is a method of asexual reproduction in plants?",
+    "options": ["Fertilization", "Pollination", "Budding", "Seed formation"],
+    "correct_answer": "Budding",
+    "explanation": "Budding is a form of asexual reproduction where a new organism develops from an outgrowth or bud due to cell division at one particular site. Fertilization, pollination, and seed formation are processes involved in sexual reproduction in plants."
+  }
+]

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- AOS Animation Library -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f5f7fa;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .dashboard-header {
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0px 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .card-hover {
+            border-radius: 15px;
+            transition: 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-7px);
+            box-shadow: 0px 12px 30px rgba(0,0,0,0.15);
+        }
+
+        .card-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .fade-in {
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body class="fade-in">
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 shadow">
+    <a class="navbar-brand fw-bold" href="{{ url_for('student.dashboard') }}">AI Learn</a>
+    <div class="ms-auto">
+        <a href="{{ url_for('logout') }}" class="btn btn-danger btn-sm">Logout</a>
+    </div>
+</nav>
+
+<div class="container mt-4">
+
+    <!-- HEADER -->
+    <div class="dashboard-header mb-4" data-aos="fade-down">
+       <h2 class="fw-bold">Welcome, {{ session.user.username }}</h2>
+                <p>Your personalized AI-powered learning dashboard</p>
+    </div>
+
+    <!-- FEATURE CARDS -->
+    <div class="row g-4">
+
+
+        <!-- AI Courses -->
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <a href="{{ url_for('student.courses') }}" class="text-decoration-none text-dark">
+                <div class="card p-4 card-hover text-center">
+                    <i class="bi bi-journal-bookmark-fill text-primary card-icon"></i>
+                    <h4 class="mt-2">Courses</h4>
+                    <p>Brief explaination of courses</p>
+                    <span class="btn btn-primary w-100">Outline Of courses</span>
+                </div>
+            </a>
+        </div>
+        
+
+      <!-- Course Registration -->
+<div class="col-md-4" data-aos="fade-up" data-aos-delay="350">
+    <a href="{{ url_for('student.student_course_list') }}" class="text-decoration-none text-dark">
+<div class="card p-4 card-hover text-center">
+            <i class="bi bi-journal-bookmark-fill text-primary card-icon"></i>
+            <h4 class="mt-2">Course Registration</h4>
+            <p>Browse available courses and enroll instantly.</p>
+            <span class="btn btn-primary text-white w-100">View Courses</span>
+        </div>
+
+    </a>
+</div>
+
+
+
+
+
+        <!-- AI Lessons card -->
+<div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+    <a href="{{ url_for('student.generate_lesson') }}" class="text-decoration-none text-dark">
+            <div class="card p-4 card-hover text-center">
+            <i class="bi bi-book text-success card-icon"></i>
+            <h4 class="mt-2">AI Lessons</h4>
+            <p>Instant lessons generated from any topic using AI.</p>
+            <span class="btn btn-success w-100">Open Lessons</span>
+        </div>
+    </a>
+</div>
+
+        <!-- AI Quizzes -->
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+           <a href="{{ url_for('student.quiz_page') }}" class="text-decoration-none text-dark">
+
+            <div class="card p-4 card-hover text-center">
+                    <i class="bi bi-pencil-square text-warning card-icon"></i>
+                    <h4 class="mt-2">AI Quizzes</h4>
+                    <p>Test your knowledge with AI-generated quizzes.</p>
+                    <span class="btn btn-warning text-white w-100">Start Quiz</span>
+                </div>
+            </a>
+        </div>
+
+    
+
+        <!-- NEW: AI Notes Generator -->
+        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
+           <a href="{{ url_for('student.notes_page') }}" class="text-decoration-none text-dark">
+
+
+                <div class="card p-4 card-hover text-center">
+                    <i class="bi bi-file-earmark-text-fill text-primary card-icon"></i>
+                    <h4 class="mt-2">AI Notes Generator</h4>
+                    <p>Generate clean, structured study notes with AI.</p>
+                    <span class="btn btn-primary w-100">Generate Notes</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- AI Avatar Teachers -->
+        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="350">
+            <a href="{{ url_for('student.avatar_page') }}" class="text-decoration-none text-dark">
+
+                <div class="card p-4 card-hover text-center">
+                    <i class="bi bi-person-video3 text-danger card-icon"></i>
+                    <h4 class="mt-2">AI Tutor</h4>
+                    <p>Visual AI avatar that speak & explain topics.</p>
+                    <span class="btn btn-danger w-100">AI Tutor</span>
+                </div>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<!-- JS Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+    AOS.init({
+        duration: 900,
+        once: true
+    });
+</script>
+
+</body>
+</html>

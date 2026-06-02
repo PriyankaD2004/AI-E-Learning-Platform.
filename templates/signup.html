@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #0b1c28;
+            font-family: Arial, sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 380px;
+            background: #152836;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        h2 {
+            text-align: center;
+            color: cyan;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: none;
+            background: #233542;
+            color: white;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: cyan;
+            color: black;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        a {
+            color: cyan;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Sign Up</h2>
+
+    <form action="{{ url_for('signup') }}" method="POST">
+        <input type="text" name="username" placeholder="Enter Username" required>
+        <input type="email" name="email" placeholder="Enter Email" required>
+        <input type="password" name="password" placeholder="Create Password" required>
+
+        <!-- Submit button -->
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <a href="{{ url_for('login') }}">Already have an account? Login</a>
+</div>
+
+</body>
+</html>
